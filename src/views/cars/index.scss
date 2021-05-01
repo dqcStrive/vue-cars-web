@@ -1,0 +1,61 @@
+.cars-wrap{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 94px;
+  z-index: 11;
+}
+
+.cars-swiper-wrap{
+  position: relative;
+  padding: 0 100px;
+  .swiper-container{
+    overflow: initial;
+  }
+  .swiper-button-prev,
+  .swiper-button-next{
+    top: 50%;
+    width: 60px;
+    height: 100px;
+    margin-top: -50px;
+    border-radius: 100px;
+    background-color: #fff;
+    @include webkit(box-shadow,0 0 18px rgba(0,0,0,.2));
+    @include webkit(transition,all .3s ease);
+    &.swiper-button-disabled{
+      opacity: 1;
+    }
+    &:hover{
+      background-color: $color-main;
+      &:after{
+        border-color: $color-blue;
+      }
+    }
+  }
+  .swiper-button-prev{
+    left: 53px;
+    &:after{
+      content: '';
+      width: 17px;
+      height: 17px;
+      border-left: 3px solid #000;
+      border-top: 3px solid #000;
+      margin-left: 10px;
+      @include webkit(transform,rotate(-45deg));
+      @include webkit(boeder-size,border-box);
+    }
+  }
+  .swiper-button-next{
+    right: 53px;
+    &:after{
+      content: '';
+      width: 17px;
+      height: 17px;
+      border-right: 3px solid #000;
+      border-top: 3px solid #000;
+      margin-right: 10px;
+      @include webkit(transform,rotate(45deg));
+      @include webkit(boeder-size,border-box);
+    }
+  }
+}
