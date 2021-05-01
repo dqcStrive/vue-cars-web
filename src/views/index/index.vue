@@ -5,7 +5,7 @@
   <mapVue></mapVue>
 
   <!-- cars dom渲染 -->
-  <!-- <carVue></carVue> -->
+  <carVue></carVue>
 
   <!-- 导航 -->
   <navBarVue></navBarVue>
