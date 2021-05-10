@@ -6,7 +6,7 @@
       <li>
         <a href="javascript:void(0);" class="select-car-btn">选择车辆</a>
       </li>
-      <li><i class="icon icon-w-44 icon-center"></i></li>
+      <li><i class="icon icon-w-44 icon-center" @click="selfLocation"></i></li>
       <li><i class="icon icon-w-44 icon-user" @click="toUser"></i></li>
     </ul>
   </div>
@@ -20,6 +20,9 @@ export default {
       this.$router.push({
         name: "User"
       })
+    },
+    selfLocation(){
+      this.$store.commit("location/SELF_LOCATION");
     }
   }
 }
