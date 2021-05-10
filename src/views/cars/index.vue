@@ -1,20 +1,10 @@
 <template>
-  <div class="cars-wrap">
+  <div class="cars-wrap" v-if="carsList && carsList.length>0">
     <div class="cars-swiper-wrap">
       <swiper ref="mySwiper" :options="swiperOption">
-        <swiper-slide>
-          <carList height="800px"></carList>
+        <swiper-slide v-for="item in carsList" :key="item.id">
+          <carList :data="item"></carList>
         </swiper-slide>
-        <swiper-slide>
-          <carList></carList>
-        </swiper-slide>
-        <swiper-slide>
-          <carList></carList>
-        </swiper-slide>
-        <swiper-slide>
-          <carList></carList>
-        </swiper-slide>
-
       </swiper>
       <div class="swiper-button-prev" slot="button-prev" @click="prev"></div>
       <div class="swiper-button-next" slot="button-next" @click="next"></div>
@@ -26,7 +16,8 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css";
-import carList from "@c/carsList/index";
+import { GetCarsList } from "@/api/cars";
+import carList from "./component/index";
 export default {
   name: "Cars",
   components: { Swiper, SwiperSlide, carList },
@@ -40,6 +31,7 @@ export default {
           nextEl: ".swiper-button-next",
         },
       },
+      carsList:[],
     };
   },
   methods: {
@@ -53,11 +45,28 @@ export default {
     },
     next() {
       this.swiper.slideNext();
-    }
+    },
+    getCarsList(parkingId) {
+
+      GetCarsList({ parkingId }).then((res) => {
+        const data = res.data.data;
+        data && (this.carsList = data)
+        // 还原状态
+        this.$store.commit("app/SET_CARS_LIST_REQUEST",false);
+      });
+    },
   },
   computed:{
     swiper(){
       return this.$refs.mySwiper.$swiper
+    }
+  },
+  watch:{
+    "$store.state.app.isClickCarsList":{
+      handler(newVal){
+        if(!newVal){this.carsList = [];}
+        this.$store.commit("app/SET_CARS_LIST_STATUS",true)
+      }
     }
   },
   mounted() {},
