@@ -1,10 +1,10 @@
 const state = {
-  selfLocation: true
+  selfLocation: true,
 }
 const mutations = {
   SELF_LOCATION(state){
     state.selfLocation = !state.selfLocation;
-  }
+  },
 }
 const actions = {}
 const getters = {}

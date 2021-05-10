@@ -1,9 +1,15 @@
 <template>
   <div class="header-back">
-    <div class="back">
-      <i class="icon"></i>
-      <h4 class="title">{{column}}</h4>
-    </div>
+    <header class="nav-header" @click="goBack">
+      <div class="back">
+        <i class="icon"></i>
+        <h4 class="title">{{title}}</h4>
+      </div>
+      <div class="right-wrap">
+        <slot name="navHeaderRight"></slot>
+      </div>
+    </header>
+
   </div>
 </template>
 
@@ -11,9 +17,15 @@
 export default {
   name:"HeaderBack",
   props:{
-    column:{
-      type: String,
-      default: '',
+  },
+  methods:{
+    goBack(){
+      this.$router.go(-1);
+    }
+  },
+  computed:{
+    title(){
+      return this.$store.state.app.routerName;
     }
   }
 }
@@ -23,8 +35,9 @@ export default {
   .header-back{
     position: relative;
     padding-bottom: 147px;
+
   }
-  .back{
+  .nav-header{
     position: absolute;
     top: 21px;
     left: 0;
@@ -32,11 +45,18 @@ export default {
     height: 40px;
     line-height: 40px;
   }
+  .back{
+    float: left;
+  }
+  .right-wrap{
+    float: right;
+  }
   .title{
     font-size: 16px;
     color: #fff;
     margin-left: 33px;
   }
+
   .icon{
     position: absolute;
     width: 40px;

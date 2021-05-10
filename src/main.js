@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// 全局路由守卫
+import "./router/per";
 
 //导入搞得插件
 import './plugin/aMap';
