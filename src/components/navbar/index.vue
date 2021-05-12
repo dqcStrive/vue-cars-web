@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import {getAccountToken} from "@/utils/cookies";
+import {getToken} from "@/utils/cookiesCars";
 export default {
   name: "NavBar",
   methods:{
     toUser(){
       this.$router.push({
-        name: getAccountToken() ? "User" : "Login"
+        name: getToken() ? "User" : "Login"
       })
     },
     selfLocation(){

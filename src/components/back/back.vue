@@ -1,7 +1,7 @@
 <template>
   <div class="header-back">
-    <header class="nav-header" @click="goBack">
-      <div class="back">
+    <header class="nav-header">
+      <div class="back"  @click="goBack">
         <i class="icon"></i>
         <h4 class="title">{{title}}</h4>
       </div>
@@ -9,7 +9,6 @@
         <slot name="navHeaderRight"></slot>
       </div>
     </header>
-
   </div>
 </template>
 
