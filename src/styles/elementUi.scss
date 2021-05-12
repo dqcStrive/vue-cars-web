@@ -17,22 +17,23 @@
     }
   }
   .el-form-item{ margin-bottom: 20px !important; }
-  .button-vcode{
+  .button-code{
     position: absolute;
     z-index: 2;
     top: 4px;
     right: 4px;
-    width: 100px;
     height: 32px;
     color: #fff;
     background-color: #34393f;
     text-align: center;
-    line-height: 32px;
     font-size: 12px;
     border-radius: 2px;
     outline: none;
     border: none;
     cursor: pointer;
+    &[disabled]{
+      opacity: .5;
+    }
   }
 
 }

@@ -19,6 +19,34 @@ const routes = [
         name: 'User',
         component: user
       },
+      // 账户
+      // 登录
+      {
+        path: '/login',
+        name: 'Login',
+        meta:{
+          title: "登录"
+        },
+        component: () => import("../views/account/login")
+      },
+      // 注册
+      {
+        path: '/register',
+        name: 'Register',
+        meta:{
+          title: "注册"
+        },
+        component: () => import("../views/account/register")
+      },
+      // 忘记密码
+      {
+        path: '/forget',
+        name: 'Forget',
+        meta:{
+          title: "忘记密码"
+        },
+        component: () => import("../views/account/forget")
+      },
       //安全设置首页
       {
         path: '/safe',
