@@ -19,3 +19,14 @@ export function GetLeaseList(data = {}){
         data
     })
 }
+
+/**
+ * 获取租赁类型
+ */
+ export function ConfirmCars(data = {}){
+  return service.request({
+      method: "post",
+      url: `${process.env.VUE_APP_API_WEB}/confirmCars/`,
+      data
+  })
+}

@@ -53,15 +53,15 @@ export default {
           item.events = {
             click: (e) => {
               this.$store.commit("app/SET_CARS_LIST_REQUEST",true);
-              
               this.distance(e); //路线规划
-              this.getCarsList(e) //请求汽车列表
+              this.getCarsList(e); //请求汽车列表
             },
           };
         });
         this.$refs.map.getParkingData(data);
       });
     },
+
     distance(e) {
       const data = e.target.getExtData(); //获取用户自定义属性
       this.$refs.map.saveData({

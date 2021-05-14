@@ -11,7 +11,8 @@ import "./router/per";
 import './plugin/aMap';
 
 //全局组件
-import "./components/back/index";
+import Back from "./components/back/back";
+Vue.component("Back",Back);
 
 Vue.config.productionTip = false;
 

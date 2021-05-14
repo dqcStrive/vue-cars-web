@@ -1,6 +1,6 @@
 <template>
   <div class="user-container">
-    <HeaderBack column="安全设置"></HeaderBack>
+    <Back column="安全设置"></Back>
     <ul class="group-links">
       <router-link to="/password" tag="li" class="arrow">
         修改登录密码
