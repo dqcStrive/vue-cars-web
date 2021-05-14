@@ -17,22 +17,23 @@
     }
   }
   .el-form-item{ margin-bottom: 20px !important; }
-  .button-vcode{
+  .button-code{
     position: absolute;
     z-index: 2;
     top: 4px;
     right: 4px;
-    width: 100px;
     height: 32px;
     color: #fff;
     background-color: #34393f;
     text-align: center;
-    line-height: 32px;
     font-size: 12px;
     border-radius: 2px;
     outline: none;
     border: none;
     cursor: pointer;
+    &[disabled]{
+      opacity: .5;
+    }
   }
 
 }
@@ -40,4 +41,36 @@
   display: block;
   width: 100%;
 
+}
+/* upload */
+.avatar-uploader{
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  margin-left: 50%;
+  @include webkitA(transform,translate(-50%,0));
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px dashed #d9d9d9;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 200px;
+  height: 150px;
+  line-height: 150px;
+  text-align: center;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  display: block;
 }

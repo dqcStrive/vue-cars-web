@@ -1,6 +1,6 @@
 <template>
   <div class="user-container">
-    <HeaderBack column="修改登录密码"></HeaderBack>
+    <Back column="修改登录密码"></Back>
     <div class="car-form-ui">
       <el-form :label-position="labelPosition" :model="formLabelAlign">
         <el-form-item label="">
@@ -21,7 +21,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" class="button-block">确定</el-button>
+          <el-button type="primary" class="button-block" width="100%">确定</el-button>
         </el-form-item>
       </el-form>
     </div>

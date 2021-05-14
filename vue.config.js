@@ -37,7 +37,7 @@ module.exports = {
     loaderOptions: {
       // 如发现 css.modules 报错，请查看这里：http://www.web-jshtml.cn/#/detailed?id=12
       scss: { 
-        prependData: `@import "./src/styles/main.scss";`
+        prependData: `@import "@/styles/main.scss";`
       }
     },
     // 启用 CSS modules for all css / pre-processor files.

@@ -7,6 +7,9 @@
 .color-main{
   color: $color-main;
 }
+.color-white{
+  color: #fff;
+}
 
 // text-algin{
 .text-center{
@@ -35,6 +38,11 @@
 //绝对定位
 .p-a{
   position: absolute;
+}
+
+// opacity{
+.opacity-4{
+  opacity: 0.4;
 }
 
 // clearfix
@@ -93,4 +101,11 @@
     @include webkit(transform,rotate(45deg));
     opacity: .2;
   }
+}
+
+
+.button-block {
+  width: 100%;
+  display: block;
+  text-align: center;
 }

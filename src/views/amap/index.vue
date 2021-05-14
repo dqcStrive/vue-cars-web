@@ -20,35 +20,36 @@
         :strokeWeight="circle.strokeWeight"
       >
       </el-amap-circle>
-      <!-- 覆盖物 停车场 -->
-     <el-amap-marker 
-     v-for="(item,index) in parkings" 
-     :key="item.id" 
-     :position="item.position" 
-     :content="item.content" 
-     :vid="index"
-     :offset="item.offset">
-     </el-amap-marker>
-    <!-- 覆盖物 停车场 车辆 -->
-    <el-amap-marker 
-     v-for="(item,index) in parkings" 
-     :key="item.id+index" 
-     :extData="item"
-     :position="item.position" 
-     :content="item.text" 
-     :events="item.events"
-     :vid="index"
-     :offset="item.offsetText">
-     </el-amap-marker>
-    <!-- 覆盖物 停车场 车辆 -->
-    <el-amap-marker 
-     v-for="(item) in parkingInfo" 
-     :key="item.text" 
-     :position="item.position" 
-     :content="item.text" 
-     zIndex="1000"
-     :offset="item.offset">
-     </el-amap-marker>
+        <!-- 覆盖物 停车场 -->
+        <el-amap-marker 
+        v-for="(item,index) in parkings" 
+        :key="item.id" 
+        :position="item.position" 
+        :content="item.content" 
+        :vid="index"
+        :offset="item.offset">
+        </el-amap-marker>
+        <!-- 覆盖物 停车场 车辆 -->
+        <el-amap-marker 
+        v-for="(item,index) in parkings" 
+        :key="item.id+index" 
+        :extData="item"
+        :position="item.position" 
+        :content="style || item.text" 
+        :events="item.events"
+        :vid="index"
+        :offset="item.offsetText">
+        </el-amap-marker>
+        <!-- 覆盖物 停车场 车辆 -->
+        <el-amap-marker 
+        v-for="(item) in parkingInfo" 
+        :key="item.text" 
+        :position="item.position" 
+        :content="item.text" 
+        zIndex="1000"
+        :events="setParkingWidth()"
+        :offset="item.offset">
+        </el-amap-marker>
     </el-amap>
   </div>
 </template>
@@ -87,6 +88,7 @@ export default {
       parkingData:{},
       lnglat:[],
       parkings:[],
+      style:"",
     };
   },
   methods: {
@@ -151,6 +153,12 @@ export default {
           offset:[-20,-60],
         }
       ]
+    },
+    // 重新获取停车场列表
+    setParkingWidth(index){
+      console.log(this.parkingInfo);
+      console.log(this.parkings);
+      // this.style = `<div style="width: 200px;height:60px;font-size: 20px;color: #fff; text-align: center; line-height:50px";background-color:"red">${this.parkings.carsNumber}</div>`
     }
   },
   mounted() {},
