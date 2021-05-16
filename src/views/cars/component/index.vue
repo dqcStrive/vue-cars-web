@@ -165,7 +165,14 @@ export default {
       // 校验提示
       message_item: this.$store.state.config.message_item,
       // 临时使用
-      backup_key:"",
+      backup_key: "",
+      // 用户审核
+      audio_status: [
+        "check_real_name",
+        "check_cars",
+        "gilding",
+        "illegalAmount",
+      ],
     };
   },
   methods: {
@@ -191,34 +198,61 @@ export default {
       };
       ConfirmCars(requestDate)
         .then((res) => {
-          const data = res.data;
-          if (!data.check_real_name || !data.check_cars || !data.gilding || !data.illegalAmount) {
-            let message = "";
-            //匹配 message
-            const key = Object.keys(data);//获取key
-            if(key && key.length > 0){
-              this.backup_key = key[0]; //临时存储
-              let msg = this.message_item[key[0]].msg;
-                msg && (message = msg);
-            }
-            //弹窗提示
-            this.$confirm(message, "提示", {
-              confirmButtonText: "确定",
-              canaelButtonText: "取消",
-              type: "warning",
-            }).then(() => {
-              let router = this.message_item[this.backup_key].router;
-              if(router){
-                this.$router.push({
-                  path: router,
-                  query:{
-                    type: this.message_item[this.backup_key].type
-                  }
-                })
-              }
+          if(res.resCode == 0){
+            this.$message({
+              message: res.message,
+              type: "success",
+            });
+            this.$router.replace({
+              name: "Order",
             });
             return false;
           }
+          const data = res.data;
+          const key = Object.keys(data); //获取key
+
+          if (key && key.length > 0) {
+            if (this.audio_status.includes(key[0])) {
+              //实名认证
+              if (
+                !data.check_real_name ||
+                !data.check_cars ||
+                !data.gilding ||
+                !data.illegalAmount
+              ) {
+                let message = "";
+                //匹配 message
+                this.backup_key = key[0]; //临时存储
+                let msg = this.message_item[key[0]].msg;
+                msg && (message = msg);
+                //弹窗提示
+                this.$confirm(message, "提示", {
+                  confirmButtonText: "确定",
+                  canaelButtonText: "取消",
+                  type: "warning",
+                }).then(() => {
+                  let router = this.message_item[this.backup_key].router;
+                  if (router) {
+                    this.$router.push({
+                      path: router,
+                      query: {
+                        type: this.message_item[this.backup_key].type,
+                      },
+                    });
+                  }
+                });
+                return false;
+              }
+            } else {
+              let msg = this.message_item[key[0]].msg;
+              this.$message({
+                message: msg,
+                type: "error",
+              });
+              return false;
+            }
+          }
+
         })
         .catch((err) => {});
     },

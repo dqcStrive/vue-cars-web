@@ -1,4 +1,30 @@
 import store from "@/store";
+// 格式化时间
+export function formatDate(params){
+  // 连接符
+  const conn = params.conn || ".";
+
+  const date = new Date(params.value);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDay();
+  const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+  const min = date.getMinutes() < 10 ? '0' + date.getMinutes() :date.getMinutes();
+  const sec = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+
+  // 日期
+  const dateValue = `${year}${conn}${month}${conn}${day}`
+  //时间
+  const timeValue = `${hours}:${min}:${sec}`
+
+  switch(params.type){
+    case "yyyy-MM-dd" : return dateValue ;
+    case "yyyy-MM-dd hh mm:ss" : return `${dateValue} ${timeValue}`;
+  }
+  return `${dateValue} ${timeValue}`;
+
+}
+
 /** 省市区街道 */
 export function address(value){
     let address = value;

@@ -3,7 +3,7 @@
     <div class="cars-swiper-wrap">
       <swiper ref="mySwiper" :options="swiperOption">
         <swiper-slide v-for="item in carsList" :key="item.id">
-          <carList :data="item"></carList>
+          <CarList :data="item"></CarList>
         </swiper-slide>
       </swiper>
       <div class="swiper-button-prev" slot="button-prev" @click="prev"></div>
@@ -17,10 +17,10 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/swiper-bundle";
 import "swiper/swiper-bundle.css";
 import { GetCarsList } from "@/api/cars";
-import carList from "./component/index";
+import CarList from "./component/index";
 export default {
   name: "Cars",
-  components: { Swiper, SwiperSlide, carList },
+  components: { Swiper, SwiperSlide, CarList },
   data() {
     return {
       swiperOption: {

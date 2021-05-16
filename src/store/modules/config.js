@@ -24,8 +24,31 @@ const state = {
     blank:{
       msg:"请先绑定银行卡",
       router: "/authentication"
+    },
+    subscribe:{
+      msg:"您已预约了其他车辆，请勿在此操作",
     }
-  }
+  },
+      // 车辆状态
+      order_status: {
+        WAIT: {
+            zh: "待取车",
+            color: "yellow"
+        },
+        OVERTIME: {
+            zh: "已超时"
+        },
+        OVER: {
+            zh: "已完成",
+            color:"green"
+        },
+        CANCEL: {
+            zh: "已取消"
+        },
+        RETURN: {
+            zh: "待还车"
+        }
+    },
 }
 const mutations = {
 

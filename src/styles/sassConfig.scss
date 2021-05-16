@@ -1,6 +1,8 @@
 $color-main: #24393f;
 $color-blue:#0f9cee;
 
+$color-wait: yellow;
+
 @mixin webkit($type,$value) {
   -webkit-#{$type}:$value;
   -moz-#{$type}:$value;

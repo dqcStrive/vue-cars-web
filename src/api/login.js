@@ -17,7 +17,7 @@ export function GetCode(data){
 export function Register(data){
     return service.request({
         method: "post",
-        url: "/register/",
+        url: `${process.env.VUE_APP_API_LOGIN}/register/`,
         data
     })
 }

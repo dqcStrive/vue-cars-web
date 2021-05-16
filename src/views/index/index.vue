@@ -14,6 +14,21 @@
     </div>
     <!-- login -->
     <Login></Login>
+    <div class="cars_activation" v-if="cars_active_data && cars_active_data.order_no">
+      <router-link class="color-white" :to="{path:'/orderDetailed',query:{order_no:cars_active_data.order_no}}">
+      正在使用车辆
+      </router-link>
+    </div>
+      <div class="button-groure" >
+        <div v-if="cars_active_data && cars_active_data.order_status =='RETURN'">
+          停车场ID：
+          <el-button size="mini" v-for="item in parkingIdItem" :key="item" @click="parking_id = item" :type="parking_id == item ?'primary' : ''">{{item}}</el-button>
+        </div>
+        <el-button type="primary" size="mini" @click="carsGet" v-if="cars_active_data && cars_active_data.order_status =='WAIT'">取车</el-button>
+        <!-- <el-button type="primary" size="mini" @click="carsReturn" v-if="cars_active_data && cars_active_data.order_status =='RETURN'">还车</el-button> -->
+        <el-button type="primary" size="mini" @click="carsReturns" v-if="cars_active_data && cars_active_data.order_status =='RETURN'">还车</el-button>
+        <el-button type="primary" size="mini" @click="carsCancel" v-if="cars_active_data && cars_active_data.order_status =='WAIT'">取消</el-button>
+      </div>
   </div>
 </template>
 
@@ -23,11 +38,18 @@ import carVue from "../cars/index";
 import navBarVue from "@c/navbar/index";
 import Login from "./login";
 import { Parking } from "@/api/parking";
+import {GetCarsActivation,CarsGet,CarsReturn,CarsCancel,CarsReturns} from "@/api/order";
 export default {
   name: "Index",
   components: { mapVue, carVue, navBarVue, Login },
   data() {
-    return {};
+    return {
+      cars_active_data: JSON.parse(localStorage.getItem("cars_active")) || "",
+      parking_id: ""
+    };
+  },
+  beforeMount(){
+    !this.cars_active_data.order_no && this.getCarsActivation();
   },
   methods: {
     callbackComponent(params) {
@@ -59,6 +81,10 @@ export default {
           };
         });
         this.$refs.map.getParkingData(data);
+        // 获取停车场Id
+
+        const parking = data.map(item => item.id);
+        this.$store.commit("location/SET_PARKING_ID",parking);
       });
     },
 
@@ -74,13 +100,88 @@ export default {
       const data = e.target.getExtData(); //获取用户自定义属性
       this.$refs.cars && this.$refs.cars.getCarsList(data.id)
     },
-
+    
+    // 获取正在使用车辆
+    getCarsActivation(){
+      GetCarsActivation().then(res => {
+        const data = res.data;
+        if(data){
+          this.cars_active_data = data;
+          localStorage.setItem("cars_active",JSON.stringify(data));
+        }
+      })
+    },
+    // 取车
+    carsGet(){
+      CarsGet({
+        order_no: this.cars_active_data.order_no,
+        cars_id:this.cars_active_data.cars_id
+      }).then(res=>{
+        const data = res.data;
+        this.$message({
+          message:res.message,
+          type:"success"
+        })
+        if(data && data.order_status){
+          this.$set(this.cars_active_data,"order_status",data.order_status);
+          localStorage.setItem("cars_active",JSON.stringify(this.cars_active_data));
+        }
+      })
+    },
+    //还车
+    // carsReturn(){
+    //   CarsReturn({
+    //     order_no: this.cars_active_data.order_no,
+    //     cars_id:this.cars_active_data.cars_id
+    //   }).then(res=>{
+    //     this.$message({
+    //       message:res.message,
+    //       type:"success"
+    //     })
+    //     this.cars_active_data = null;
+    //     localStorage.removeItem("cars_active")
+    //   })
+    // },
+    carsReturns(){
+      CarsReturns({
+        order_no: this.cars_active_data.order_no,
+        cars_id:this.cars_active_data.cars_id,
+        parking_id:this.parking_id
+      }).then(res=>{
+        this.$message({
+          message:res.message,
+          type:"success"
+        })
+        this.cars_active_data = null;
+        localStorage.removeItem("cars_active")
+      }).catch(err => {})
+    },
+    // 取消
+    carsCancel(){
+      CarsCancel({
+        order_no: this.cars_active_data.order_no,
+        cars_id:this.cars_active_data.cars_id
+      }).then(res=>{
+        this.$message({
+          message:res.message,
+          type:"success"
+        })
+        this.cars_active_data = null;
+        localStorage.removeItem("cars_active")
+      })
+    },
+  },
+  mounted(){
+    this.loadMap()
   },
   computed: {
     show() {
       let router = this.$route;
       return router.name === "Index" ? false : true;
     },
+    parkingIdItem(){
+      return this.$store.state.location.parking_id;
+    }
   },
   watch: {},
 };
@@ -100,5 +201,20 @@ export default {
   &.open {
     right: 0px;
   }
+}
+.cars_activation{
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-size: 12px;
+  background-color: green;
+  color: #fff;
+}
+.button-groure{
+  position: fixed;
+  left: 20px;
+  top: 60px;
 }
 </style>

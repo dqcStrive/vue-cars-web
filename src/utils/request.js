@@ -4,6 +4,8 @@ import { getToken, getUsername } from "./cookies";
 import { getTokenCars } from "./cookiesCars";
 // ElementUI 单独引入
 import { Message } from 'element-ui';
+
+// const BASEURL = process.env.NODE_ENV === "production" ? "" : process.env.VUE_APP_API_WEB
 // 创建实例
 const service = axios.create({
     baseURL:"",    // 请求地址
